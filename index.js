@@ -1727,6 +1727,25 @@ app.get('/', (req, res) => {
             else if(temp.startsWith("T3")) {
                 ans3 = temp.slice(Math.min(2, temp.length));
 
+
+
+
+                ans0 = ans0.replace("{T1}", "_" + ans1 + "_");
+                ans0 = ans0.replace("{T2}", `_` + ans2 + `_`);
+                ans0 = ans0.replace("{T3}", "_" + ans3 + "_");
+
+                ans1 = ans1.replace("{T0}", "_" + ans0 + "_");
+                ans1 = ans1.replace("{T2}", "_" + ans2 + "_");
+                ans1 = ans1.replace("{T3}", "_" + ans3 + "_");
+
+                ans2 = ans2.replace("{T0}", "_" + ans0 + "_");
+                ans2 = ans2.replace("{T1}", "_" + ans1 + "_");
+                ans2 = ans2.replace("{T3}", "_" + ans3 + "_");
+
+                ans3 = ans3.replace("{T0}", "_" + ans0 + "_");
+                ans3 = ans3.replace("{T1}", "_" + ans1 + "_");
+                ans3 = ans3.replace("{T2}", "_" + ans2 + "_");
+
                 quiz.push({
                     "question": question,
                     "ans0": ans0,
@@ -1735,6 +1754,8 @@ app.get('/', (req, res) => {
                     "ans3": ans3,
                 });
                 
+
+
                 question = "";
                 continue;
             }
@@ -1759,6 +1780,7 @@ app.get('/', (req, res) => {
         console.log(quiz[226]);
         console.log(quiz[227]);
         var temp = getRandomInteger(0, 227)
+        // var temp = getRandomInteger(3, 3)
         res.send(quiz[temp]);
     
         
