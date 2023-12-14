@@ -18,9 +18,9 @@ function getRandomInteger(min, max) {
   }
 
 
-// app.get('/test', (req, res) => {
-//     res.sendFile(path.join(publicPath, 'home1.html'));
-// })
+app.get('/test', (req, res) => {
+    res.sendFile(path.join(publicPath, 'home1.html'));
+})
 
 app.get('/', (req, res) => {
     var quiz = []
