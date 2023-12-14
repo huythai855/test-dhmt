@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        #question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .answer {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .answer:hover {
+            background-color: #f0f0f0;
+        }
+        .selected {
+            background-color: #e0e0e0;
+        }
+        
+        .color-change-label {
+            color: red; /* Màu mặc định của label */
+        }
+    </style>
+</head>
+<body>
+
+    <label class="HangMoi" id="cauHoi">Chưa có câu hỏi</label>
+        
+        <br>
+        <label class="radio-container">
+            <input type="radio" id="ans0" name="gioitinh" checked="checked"> <span id="text0">Câu trả lời 1</span>
+            <span class="checkmark"></span>
+            <span class="checkmark2"></span>
+        </label>
+
+        <br>
+        <label class="radio-container">
+            <input type="radio" id="ans1" name="gioitinh" checked="checked"> <span id="text1">Câu trả lời 2</span>
+            <span class="checkmark"></span>
+            <span class="checkmark2"></span>
+        </label>
+
+        <br>
+        <label class="radio-container">
+            <input type="radio" id="ans2" name="gioitinh" checked="checked"> <span id="text2">Câu trả lời 3</span>
+            <span class="checkmark"></span>
+            <span class="checkmark2"></span>
+        </label>
+
+        <br>
+        <label class="radio-container">
+            <input type="radio" id="ans3" name="gioitinh" checked="checked"> <span id="text3">Câu trả lời 4</span>
+            <span class="checkmark"></span>
+            <span class="checkmark2"></span>
+        </label>
+        <br>
+
+        <br>
+        <br>
+        
+        <label id="ketQua" ></label>
+        <br>
+    
+        <br>
+        <button onclick="kiemTra()">Kiểm tra</button>
+        <br>
+        <button onclick="cauTiep()">Câu tiếp</button>
+        
+
+        
+
+<script>
+    var correct1 = "";
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            // Lấy một vị trí ngẫu nhiên từ phần còn lại của mảng
+            const j = Math.floor(Math.random() * (i + 1));
+
+            // Hoán đổi giá trị của hai phần tử
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+    
+    function kiemTra() {
+        console.log("Correct: ", correct1);
+        // Lấy ra các phần tử input radio
+        var ans0 = document.getElementById("ans0");
+        var ans1 = document.getElementById("ans1");
+        var ans2 = document.getElementById("ans2");
+        var ans3 = document.getElementById("ans3");
+
+        var text0= document.getElementById("text0");
+        var text1= document.getElementById("text1");
+        var text2= document.getElementById("text2");
+        var text3= document.getElementById("text3");
+        var ketQuaMau = document.getElementById('ketQua');
+
+        if (ans0.checked) {
+            if(text0.innerHTML == correct1) 
+                ketQua.innerHTML = "đúng"
+            else {
+                ketQua.innerHTML = "sai. Đáp án đúng là: " + correct1;
+                label.classList.add('color-change-label');
+            }
+                
+
+
+        } else if (ans1.checked) {
+            if(text1.innerHTML == correct1) 
+                ketQua.innerHTML = "đúng"
+            else 
+                ketQua.innerHTML = "sai. Đáp án đúng là: " + correct1;
+            
+        } else if (ans2.checked) {
+            if(text2.innerHTML == correct1) 
+                ketQua.innerHTML = "đúng"
+            else 
+                ketQua.innerHTML = "sai. Đáp án đúng là: " + correct1;
+            
+        } else if (ans3.checked) {
+            if(text3.innerHTML == correct1) 
+                ketQua.innerHTML = "đúng"
+            else 
+                ketQua.innerHTML = "sai. Đáp án đúng là: " + correct1;
+        }
+        
+    }
+
+    function cauTiep() {
+        const apiUrl = 'https://zany-spork-q6pjqppw5w34wjj-3000.app.github.dev/';
+
+        fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // res = response.json().ans0;
+            return response.json();
+
+            
+
+        })
+        .then(data => {
+            // Xử lý dữ liệu nhận được từ API
+            console.log('Dữ liệu từ API:', data);
+            console.log(data.question);
+            console.log(data.ans0);
+
+            var text0 = document.getElementById("text0");
+            var text1 = document.getElementById("text1");
+            var text2 = document.getElementById("text2");
+            var text3 = document.getElementById("text3");
+            var cauHoi = document.getElementById("cauHoi")
+            correct1 = data.ans0;
+
+            cauHoi.innerHTML = data.question;
+            // text0.innerHTML = data.ans0;
+            // text1.innerHTML = data.ans1;
+            // text2.innerHTML = data.ans2;
+            // text3.innerHTML = data.ans3;
+
+
+            var tempAns = [];
+            tempAns.push(data.ans0.slice())
+            tempAns.push(data.ans1.slice())
+            tempAns.push(data.ans2.slice())
+            tempAns.push(data.ans3.slice())
+            shuffleArray(tempAns);
+            text0.innerHTML = tempAns[0];
+            text1.innerHTML = tempAns[1];
+            text2.innerHTML = tempAns[2];
+            text3.innerHTML = tempAns[3];
+            
+
+            
+            ketQua.innerHTML = "chưa kiểm tra"
+
+        })
+        .catch(error => {
+            // Xử lý lỗi nếu có
+            console.error('Lỗi khi gọi API:', error);
+        });
+    }
+
+
+
+</script>
+
+</body>
+</html>
