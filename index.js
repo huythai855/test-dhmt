@@ -17,6 +17,14 @@ function getRandomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://huythai855.github.io');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 
 app.get('/test', (req, res) => {
     res.sendFile(path.join(publicPath, 'home1.html'));
