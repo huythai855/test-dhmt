@@ -1712,23 +1712,23 @@ app.get('/', (req, res) => {
             var temp = lines[i];
 
             if(temp.startsWith("T0")) {
-                ans0 = temp.slice(Math.min(2, temp.length), -1);
+                ans0 = temp.slice(Math.min(2, temp.length));
                 continue;
             }
 
             if(temp.startsWith("T1")) 
-                ans1 = temp.slice(Math.min(2, temp.length), -1);
+                ans1 = temp.slice(Math.min(2, temp.length));
 
             else if(temp.startsWith("T2")) {
-                ans2 = temp.slice(Math.min(2, temp.length), -1);
+                ans2 = temp.slice(Math.min(2, temp.length));
                 continue;
             }
 
             else if(temp.startsWith("T3")) {
-                ans3 = temp.slice(Math.min(2, temp.length), -1);
+                ans3 = temp.slice(Math.min(2, temp.length));
 
                 quiz.push({
-                    "question": question.slice(0, -1),
+                    "question": question,
                     "ans0": ans0,
                     "ans1": ans1,
                     "ans2": ans2,
